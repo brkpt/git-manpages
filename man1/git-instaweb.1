@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: git-instaweb
 .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: 02/24/2014
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 06/13/2016
 .\"    Manual: Git Manual
-.\"    Source: Git 1.9.0
+.\"    Source: Git 2.9.0
 .\"  Language: English
 .\"
-.TH "GIT\-INSTAWEB" "1" "02/24/2014" "Git 1\&.9\&.0" "Git Manual"
+.TH "GIT\-INSTAWEB" "1" "06/13/2016" "Git 2\&.9\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -39,7 +39,7 @@ git-instaweb \- Instantly browse your working repository in gitweb
 .sp
 .SH "DESCRIPTION"
 .sp
-A simple script to set up gitweb and a web server for browsing the local repository\&.
+A simple script to set up \fBgitweb\fR and a web server for browsing the local repository\&.
 .SH "OPTIONS"
 .PP
 \-l, \-\-local
@@ -98,7 +98,7 @@ You may specify configuration in your \&.git/config
         httpd = apache2 \-f
         port = 4321
         browser = konqueror
-        modulepath = /usr/lib/apache2/modules
+        modulePath = /usr/lib/apache2/modules
 .fi
 .if n \{\
 .RE

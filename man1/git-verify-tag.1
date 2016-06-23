@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: git-verify-tag
 .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: 02/24/2014
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 06/13/2016
 .\"    Manual: Git Manual
-.\"    Source: Git 1.9.0
+.\"    Source: Git 2.9.0
 .\"  Language: English
 .\"
-.TH "GIT\-VERIFY\-TAG" "1" "02/24/2014" "Git 1\&.9\&.0" "Git Manual"
+.TH "GIT\-VERIFY\-TAG" "1" "06/13/2016" "Git 2\&.9\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -39,6 +39,11 @@ git-verify-tag \- Check the GPG signature of tags
 .sp
 Validates the gpg signature created by \fIgit tag\fR\&.
 .SH "OPTIONS"
+.PP
+\-\-raw
+.RS 4
+Print the raw gpg status output to standard error instead of the normal human\-readable output\&.
+.RE
 .PP
 \-v, \-\-verbose
 .RS 4

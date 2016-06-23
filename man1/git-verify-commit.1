@@ -1,5 +1,5 @@
 '\" t
-.\"     Title: git-parse-remote
+.\"     Title: git-verify-commit
 .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 .\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
 .\"      Date: 06/13/2016
@@ -7,7 +7,7 @@
 .\"    Source: Git 2.9.0
 .\"  Language: English
 .\"
-.TH "GIT\-PARSE\-REMOTE" "1" "06/13/2016" "Git 2\&.9\&.0" "Git Manual"
+.TH "GIT\-VERIFY\-COMMIT" "1" "06/13/2016" "Git 2\&.9\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,16 +28,32 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-git-parse-remote \- Routines to help parsing remote repository access parameters
+git-verify-commit \- Check the GPG signature of commits
 .SH "SYNOPSIS"
 .sp
 .nf
-\fI\&. "$(git \-\-exec\-path)/git\-parse\-remote"\fR
+\fIgit verify\-commit\fR <commit>\&...
 .fi
 .sp
 .SH "DESCRIPTION"
 .sp
-This script is included in various scripts to supply routines to parse files under $GIT_DIR/remotes/ and $GIT_DIR/branches/ and configuration variables that are related to fetching, pulling and pushing\&.
+Validates the gpg signature created by \fIgit commit \-S\fR\&.
+.SH "OPTIONS"
+.PP
+\-\-raw
+.RS 4
+Print the raw gpg status output to standard error instead of the normal human\-readable output\&.
+.RE
+.PP
+\-v, \-\-verbose
+.RS 4
+Print the contents of the commit object before validating it\&.
+.RE
+.PP
+<commit>\&...
+.RS 4
+SHA\-1 identifiers of Git commit objects\&.
+.RE
 .SH "GIT"
 .sp
 Part of the \fBgit\fR(1) suite

@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: git-svn
 .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: 04/21/2014
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 06/13/2016
 .\"    Manual: Git Manual
-.\"    Source: Git 2.0.0.rc0.26.g779792a
+.\"    Source: Git 2.9.0
 .\"  Language: English
 .\"
-.TH "GIT\-SVN" "1" "04/21/2014" "Git 2\&.0\&.0\&.rc0\&.26\&.g77" "Git Manual"
+.TH "GIT\-SVN" "1" "06/13/2016" "Git 2\&.9\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -93,7 +93,9 @@ option in the [svn\-remote] config\&.
 .PP
 \-\-username=<user>
 .RS 4
-For transports that SVN handles authentication for (http, https, and plain svn), specify the username\&. For other transports (eg svn+ssh://), you must include the username in the URL, eg svn+ssh://foo@svn\&.bar\&.com/project
+For transports that SVN handles authentication for (http, https, and plain svn), specify the username\&. For other transports (e\&.g\&.
+\fBsvn+ssh://\fR), you must include the username in the URL, e\&.g\&.
+\fBsvn+ssh://foo@svn\&.bar\&.com/project\fR
 .RE
 .PP
 \-\-prefix=<prefix>
@@ -112,7 +114,10 @@ This allows one to specify a prefix which is prepended to the names of remotes i
 \fBNote\fR
 .ps -1
 .br
-Before Git v2\&.0, the default prefix was "" (no prefix)\&. This meant that SVN\-tracking refs were put at "refs/remotes/*", which is incompatible with how Git\(cqs own remote\-tracking refs are organized\&.
+Before Git v2\&.0, the default prefix was "" (no prefix)\&. This meant that SVN\-tracking refs were put at "refs/remotes/*", which is incompatible with how Git\(cqs own remote\-tracking refs are organized\&. If you still want the old default, you can get it by passing
+\fB\-\-prefix ""\fR
+on the command line (\fB\-\-prefix=""\fR
+may not work if your Perl\(cqs Getopt::Long is < v2\&.37)\&.
 .sp .5v
 .RE
 .RE
@@ -162,7 +167,7 @@ in the FILES section below for details)\&.
 Store Git commit times in the local time zone instead of UTC\&. This makes
 \fIgit log\fR
 (even without \-\-date=local) show the same times that
-svn log
+\fBsvn log\fR
 would in the local time zone\&.
 .sp
 This doesn\(cqt interfere with interoperating with the Subversion repository you cloned from, but if you wish for your local Git repository to be able to interoperate with someone else\(cqs local Git repository, either don\(cqt use this option or you should both use it in the same local time zone\&.
@@ -194,7 +199,7 @@ config key: svn\-remote\&.<name>\&.ignore\-paths
 .RE
 .\}
 .sp
-If the ignore\-paths config key is set and the command line option is also given, both regular expressions will be used\&.
+If the ignore\-paths configuration key is set, and the command\-line option is also given, both regular expressions will be used\&.
 .sp
 Examples:
 .PP
@@ -242,6 +247,17 @@ option should match for every
 \fI\-\-ignore\-paths\fR
 takes precedence over
 \fI\-\-include\-paths\fR\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+config key: svn\-remote\&.<name>\&.include\-paths
+.fi
+.if n \{\
+.RE
+.\}
+.sp
 .RE
 .PP
 \-\-log\-window\-size=<n>
@@ -286,7 +302,7 @@ Set the name of placeholder files created by \-\-preserve\-empty\-dirs\&. Defaul
 This fetches revisions from the SVN parent of the current HEAD and rebases the current (uncommitted to SVN) work against it\&.
 .sp
 This works similarly to
-svn update
+\fBsvn update\fR
 or
 \fIgit pull\fR
 except that it preserves linear history with
@@ -341,13 +357,13 @@ After committing, do not rebase or reset\&.
 Commit to this SVN URL (the full path)\&. This is intended to allow existing
 \fIgit svn\fR
 repositories created with one transport method (e\&.g\&.
-svn://
+\fBsvn://\fR
 or
-http://
+\fBhttp://\fR
 for anonymous read) to be reused if a user is later given access to an alternate transport method (e\&.g\&.
-svn+ssh://
+\fBsvn+ssh://\fR
 or
-https://) for commit\&.
+\fBhttps://\fR) for commit\&.
 .sp
 .if n \{\
 .RS 4
@@ -360,13 +376,15 @@ config key: svn\&.commiturl (overwrites all svn\-remote\&.<name>\&.commiturl opt
 .RE
 .\}
 .sp
+Note that the SVN URL of the commiturl config key includes the SVN branch\&. If you rather want to set the commit URL for an entire SVN repository use svn\-remote\&.<name>\&.pushurl instead\&.
+.sp
 Using this option for any other purpose (don\(cqt ask) is very strongly discouraged\&.
 .RE
 .PP
 \-\-mergeinfo=<mergeinfo>
 .RS 4
 Add the given merge information during the dcommit (e\&.g\&.
-\-\-mergeinfo="/branches/foo:1\-10")\&. All svn server versions can store this information (as a property), and svn clients starting from version 1\&.5 can make use of it\&. To specify merge information from multiple branches, use a single space character between the branches (\-\-mergeinfo="/branches/foo:1\-10 /branches/bar:3,5\-6,8")
+\fB\-\-mergeinfo="/branches/foo:1\-10"\fR)\&. All svn server versions can store this information (as a property), and svn clients starting from version 1\&.5 can make use of it\&. To specify merge information from multiple branches, use a single space character between the branches (\fB\-\-mergeinfo="/branches/foo:1\-10 /branches/bar:3,5\-6,8"\fR)
 .sp
 .if n \{\
 .RS 4
@@ -384,7 +402,7 @@ This option will cause git\-svn to attempt to automatically populate the svn:mer
 \-\-interactive
 .RS 4
 Ask the user to confirm that a patch set should actually be sent to SVN\&. For each patch, one may answer "yes" (accept this patch), "no" (discard this patch), "all" (accept all patches), or "quit"\&.
-
+.sp
 \fIgit svn dcommit\fR
 returns immediately if answer is "no" or "quit", without committing anything to SVN\&.
 .RE
@@ -537,12 +555,12 @@ Produce output in the same format as
 When given an SVN revision number of the form
 \fIrN\fR, returns the corresponding Git commit hash (this can optionally be followed by a tree\-ish to specify which branch should be searched)\&. When given a tree\-ish, returns the corresponding SVN revision number\&.
 .PP
-\-\-before
+\-B, \-\-before
 .RS 4
 Don\(cqt require an exact match if given an SVN revision, instead find the commit corresponding to the state of the SVN repository (on the current branch) at the specified revision\&.
 .RE
 .PP
-\-\-after
+\-A, \-\-after
 .RS 4
 Don\(cqt require an exact match if given an SVN revision; if there is not an exact match return the closest match searching forward in the history\&.
 .RE
@@ -575,9 +593,9 @@ Attempts to recreate empty directories that core Git cannot track based on infor
 \fIcommit\-diff\fR
 .RS 4
 Commits the diff of two tree\-ish arguments from the command\-line\&. This command does not rely on being inside an
-git svn init\-ed repository\&. This command takes three arguments, (a) the original tree to diff against, (b) the new tree result, (c) the URL of the target Subversion repository\&. The final argument (URL) may be omitted if you are working from a
+\fBgit svn init\fR\-ed repository\&. This command takes three arguments, (a) the original tree to diff against, (b) the new tree result, (c) the URL of the target Subversion repository\&. The final argument (URL) may be omitted if you are working from a
 \fIgit svn\fR\-aware repository (that has been
-init\-ed with
+\fBinit\fR\-ed with
 \fIgit svn\fR)\&. The \-r<revision> option is required for this\&.
 .RE
 .PP
@@ -869,28 +887,6 @@ Make
 less verbose\&. Specify a second time to make it even less verbose\&.
 .RE
 .PP
-\-\-repack[=<n>], \-\-repack\-flags=<flags>
-.RS 4
-These should help keep disk usage sane for large fetches with many revisions\&.
-.sp
-\-\-repack takes an optional argument for the number of revisions to fetch before repacking\&. This defaults to repacking every 1000 commits fetched if no argument is specified\&.
-.sp
-\-\-repack\-flags are passed directly to
-\fIgit repack\fR\&.
-.sp
-.if n \{\
-.RS 4
-.\}
-.nf
-config key: svn\&.repack
-config key: svn\&.repackflags
-.fi
-.if n \{\
-.RE
-.\}
-.sp
-.RE
-.PP
 \-m, \-\-merge, \-s<strategy>, \-\-strategy=<strategy>, \-p, \-\-preserve\-merges
 .RS 4
 These are only used with the
@@ -938,9 +934,9 @@ When retrieving svn commits into Git (as part of
 \fIrebase\fR, or
 \fIdcommit\fR
 operations), look for the first
-From:
+\fBFrom:\fR
 or
-Signed\-off\-by:
+\fBSigned\-off\-by:\fR
 line in the log message and use that as the author string\&.
 .RE
 .PP
@@ -952,13 +948,13 @@ When committing to svn from Git (as part of
 or
 \fIdcommit\fR
 operations), if the existing log message doesn\(cqt already have a
-From:
+\fBFrom:\fR
 or
-Signed\-off\-by:
+\fBSigned\-off\-by:\fR
 line, append a
-From:
+\fBFrom:\fR
 line based on the Git commit\(cqs author string\&. If you use this, then
-\-\-use\-log\-author
+\fB\-\-use\-log\-author\fR
 will retrieve a valid author string for all commits\&.
 .RE
 .SH "ADVANCED OPTIONS"
@@ -1177,7 +1173,7 @@ The initial \fIgit svn clone\fR can be quite time\-consuming (especially for lar
 .sp
 Prefer to use \fIgit svn rebase\fR or \fIgit rebase\fR, rather than \fIgit pull\fR or \fIgit merge\fR to synchronize unintegrated commits with a \fIgit svn\fR branch\&. Doing so will keep the history of unintegrated commits linear with respect to the upstream SVN repository and allow the use of the preferred \fIgit svn dcommit\fR subcommand to push unintegrated commits back into SVN\&.
 .sp
-Originally, \fIgit svn\fR recommended that developers pulled or merged from the \fIgit svn\fR branch\&. This was because the author favored git svn set\-tree B to commit a single head rather than the git svn set\-tree A\&.\&.B notation to commit multiple commits\&. Use of \fIgit pull\fR or \fIgit merge\fR with git svn set\-tree A\&.\&.B will cause non\-linear history to be flattened when committing into SVN and this can lead to merge commits unexpectedly reversing previous commits in SVN\&.
+Originally, \fIgit svn\fR recommended that developers pulled or merged from the \fIgit svn\fR branch\&. This was because the author favored \fBgit svn set\-tree B\fR to commit a single head rather than the \fBgit svn set\-tree A\&.\&.B\fR notation to commit multiple commits\&. Use of \fIgit pull\fR or \fIgit merge\fR with \fBgit svn set\-tree A\&.\&.B\fR will cause non\-linear history to be flattened when committing into SVN and this can lead to merge commits unexpectedly reversing previous commits in SVN\&.
 .SH "MERGE TRACKING"
 .sp
 While \fIgit svn\fR can track copy history (including branches and tags) for repositories adopting a standard layout, it cannot yet represent merge history that happened inside git back upstream to SVN users\&. Therefore it is advised that users keep history as linear as possible inside Git to ease compatibility with SVN (see the CAVEATS section below)\&.
@@ -1252,6 +1248,8 @@ In SVN, it is possible (though discouraged) to commit changes to a tag (because 
         url = http://server\&.org/svn
         fetch = trunk/project\-a:refs/remotes/project\-a/trunk
         branches = branches/*/project\-a:refs/remotes/project\-a/branches/*
+        branches = branches/release_*:refs/remotes/project\-a/branches/release_*
+        branches = branches/re*se:refs/remotes/project\-a/branches/*
         tags = tags/*/project\-a:refs/remotes/project\-a/tags/*
 .fi
 .if n \{\
@@ -1260,6 +1258,32 @@ In SVN, it is possible (though discouraged) to commit changes to a tag (because 
 .sp
 .sp
 Keep in mind that the \fI*\fR (asterisk) wildcard of the local ref (right of the \fI:\fR) \fBmust\fR be the farthest right path component; however the remote wildcard may be anywhere as long as it\(cqs an independent path component (surrounded by \fI/\fR or EOL)\&. This type of configuration is not automatically created by \fIinit\fR and should be manually entered with a text\-editor or using \fIgit config\fR\&.
+.sp
+Also note that only one asterisk is allowed per word\&. For example:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+branches = branches/re*se:refs/remotes/project\-a/branches/*
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+will match branches \fIrelease\fR, \fIrese\fR, \fIre123se\fR, however
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+branches = branches/re*s*e:refs/remotes/project\-a/branches/*
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+will produce an error\&.
 .sp
 It is also possible to fetch a subset of branches or tags by using a comma\-separated list of names within braces\&. For example:
 .sp
